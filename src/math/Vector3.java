@@ -36,4 +36,5 @@ public class Vector3 {
     }
 
     private double[] crd;
+
 }

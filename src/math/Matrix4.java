@@ -64,4 +64,5 @@ public class Matrix4 {
     private Matrix4(double[] m) {
         this.matrix = m;
     }
+
 }

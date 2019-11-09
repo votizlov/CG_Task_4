@@ -4,6 +4,7 @@ import math.Vector3;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.LinkedList;
@@ -50,5 +51,13 @@ public class Scene {
         }
         g.dispose();
         return bi;
+    }
+
+    public void toggleModel(IModel model){
+        if(models.contains(model)){
+            models.remove(model);
+        } else {
+            models.add(model);
+        }
     }
 }

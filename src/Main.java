@@ -1,4 +1,5 @@
 import javax.swing.*;
+import java.awt.*;
 
 public class Main {
     public static void main(String[] args) {
@@ -8,5 +9,10 @@ public class Main {
         DrawPanel panel = new DrawPanel();
         frame.add(panel);
         frame.setVisible(true);
+
+        JFrame modelChooserFrame = new JFrame();
+        frame.setSize(200,500);
+        frame.setLayout( new GridLayout(4,1));
+
     }
 }
