@@ -1,97 +1,87 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
-
-import thirdDim.Camera;
-import thirdDim.IModel;
-import thirdDim.Scene;
-import thirdDim.ScreenConverter;
+import math.Matrix4;
+import math.Vector3;
+import models.Cube;
+import models.Line3d;
+import thirdDimention.Camera;
+import thirdDimention.Scene;
+import thirdDimention.ScreenConverter;
+import thirdDimention.ScreenPoint;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
-import java.awt.image.BufferedImage;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 
+public class DrawPanel extends JPanel implements MouseListener, MouseMotionListener {
 
-public class DrawPanel extends JPanel implements ActionListener,
-        MouseListener, MouseMotionListener, MouseWheelListener {
     private ScreenConverter sc;
     private Camera cam;
     private Scene scene;
-    private boolean renderLight;
-    
+
+
     public DrawPanel() {
         super();
+        sc = new ScreenConverter(-2, 2, 4, 4, 500, 500);
         cam = new Camera();
-        //sc = new ScreenConverter(f.getRectangle(), 450, 450);
-        this.addMouseListener(this);
-        this.addMouseMotionListener(this);
-        this.addMouseWheelListener(this);
-
+        scene = new Scene();
+        scene.models.add(new Line3d(new Vector3(0, 0, 0), new Vector3(0, 0, 1)));
+        scene.models.add(new Line3d(new Vector3(0, 0, 0), new Vector3(0, 1, 0)));
+        scene.models.add(new Line3d(new Vector3(0, 0, 0), new Vector3(1, 0, 0)));
+        scene.models.add(new Cube(new Vector3(1, 1, 1), new Vector3(-1, -1, -1)));
+        addMouseListener(this);
+        addMouseMotionListener(this);
     }
+
 
     @Override
     public void paint(Graphics g) {
-        BufferedImage bi = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_RGB);
-        sc.setHs(getHeight());
-        sc.setWs(getWidth());
-        scene.draw(sc,cam);
-        g.drawImage(bi, 0, 0, null);
+        g.drawImage(scene.drawScene(sc, cam), 0, 0, null);
     }
-    
-    
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        repaint();
-    }
+    private ScreenPoint last = null;
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        
+
     }
 
     @Override
     public void mousePressed(MouseEvent e) {
-        int direction = 0;
-        if (e.getButton() == MouseEvent.BUTTON1)
-            direction = 1;
-        else if (e.getButton() == MouseEvent.BUTTON3)
-            direction = -1;
-       // w.getExternalForce().setValue(10*direction);
+        last = new ScreenPoint(e.getX(), e.getY());
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        //w.getExternalForce().setValue(0);
+        last = null;
     }
 
     @Override
     public void mouseEntered(MouseEvent e) {
-        
+
     }
 
     @Override
     public void mouseExited(MouseEvent e) {
-        
+
     }
 
     @Override
     public void mouseDragged(MouseEvent e) {
-      //  w.getExternalForce().setLocation(sc.s2r(new ScreenPoint(e.getX(), e.getY())));
+        ScreenPoint np = new ScreenPoint(e.getX(), e.getY());
+        if (last != null) {
+            int dx = np.getI() - last.getI();
+            int dy = np.getJ() - last.getJ();
+            double da = dx * Math.PI / 180;
+            double db = dy * Math.PI / 180;
+            cam.rotate = Matrix4.rotate(da, 0).mul(Matrix4.rotate(db, 1).mul(cam.rotate));
+        }
+        last = np;
+        repaint();
     }
 
     @Override
     public void mouseMoved(MouseEvent e) {
-      //  w.getExternalForce().setLocation(sc.s2r(new ScreenPoint(e.getX(), e.getY())));
-    }
 
-    @Override
-    public void mouseWheelMoved(MouseWheelEvent e) {
-    }
-    public void toggleModel(IModel model){
-        scene.toggleModel(model);
     }
 }
