@@ -1,42 +1,61 @@
 import math.Matrix4;
 import math.Vector3;
+import math.Vector4;
 import models.Cube;
 import models.Line3d;
 import thirdDimention.Camera;
+import thirdDimention.Renderer;
 import thirdDimention.Scene;
 import thirdDimention.ScreenConverter;
 import thirdDimention.ScreenPoint;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
+import java.awt.event.*;
 
 public class DrawPanel extends JPanel implements MouseListener, MouseMotionListener {
 
     private ScreenConverter sc;
     private Camera cam;
     private Scene scene;
-
+    private Renderer renderer;
+    private boolean isRendererActive = false;
 
     public DrawPanel() {
         super();
         sc = new ScreenConverter(-2, 2, 4, 4, 500, 500);
         cam = new Camera();
         scene = new Scene();
-        scene.models.add(new Line3d(new Vector3(0, 0, 0), new Vector3(0, 0, 1)));
-        scene.models.add(new Line3d(new Vector3(0, 0, 0), new Vector3(0, 1, 0)));
-        scene.models.add(new Line3d(new Vector3(0, 0, 0), new Vector3(1, 0, 0)));
+        renderer = new Renderer(sc,cam,scene);
+        scene.models.add(new Line3d(new Vector3(0, 0, 0), new Vector3(0, 0, 2)));
+        scene.models.add(new Line3d(new Vector3(0, 0, 0), new Vector3(0, 2, 0)));
+        scene.models.add(new Line3d(new Vector3(0, 0, 0), new Vector3(2, 0, 0)));
         scene.models.add(new Cube(new Vector3(1, 1, 1), new Vector3(-1, -1, -1)));
+
+        //Obj obj = ObjUtils.convertToRenderable(ObjReader.read(inputStream)); todo make it work
         addMouseListener(this);
         addMouseMotionListener(this);
+        addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                switch (e.getKeyCode()) {
+                    case  KeyEvent.VK_R:  isRendererActive = !isRendererActive;
+                    break;
+                    case KeyEvent.VK_W:cam.translate.mul(new Vector4(1,2,3,4));
+                    break;
+                }
+                repaint();
+            }
+        });
     }
 
 
     @Override
     public void paint(Graphics g) {
-        g.drawImage(scene.drawScene(sc, cam), 0, 0, null);
+        if(!isRendererActive)
+            g.drawImage(scene.drawScene(sc, cam), 0, 0, null);
+        else
+            g.drawImage(renderer.renderImage(),0,0,null);
     }
 
     private ScreenPoint last = null;
