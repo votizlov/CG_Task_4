@@ -41,7 +41,13 @@ public class DrawPanel extends JPanel implements MouseListener, MouseMotionListe
                 switch (e.getKeyCode()) {
                     case  KeyEvent.VK_R:  isRendererActive = !isRendererActive;
                     break;
-                    case KeyEvent.VK_W:cam.translate.mul(new Vector4(1,2,3,4));
+                    case KeyEvent.VK_UP:cam.scale.moveX(1);
+                    break;
+                    case KeyEvent.VK_DOWN:cam.scale.moveX(-1);
+                    break;
+                    case KeyEvent.VK_RIGHT:cam.translate.moveY(1);
+                    break;
+                    case KeyEvent.VK_LEFT:cam.translate.moveZ(1);
                     break;
                 }
                 repaint();
