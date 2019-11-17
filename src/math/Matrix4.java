@@ -43,18 +43,6 @@ public class Matrix4 {
         return m;
     }
 
-    public void moveX(double dX) {
-        this.setAt(3,0,getAt(3,0)+dX);
-    }
-
-    public void moveY(double dX) {
-        this.setAt(3,1,getAt(3,1)+dX);
-    }
-
-    public void moveZ(double dX) {
-        this.setAt(3,2,getAt(3,2)+dX);
-    }
-
     public Vector4 mul(Vector4 v) {
         double[] r = new double[4];
         for (int i = 0; i < 4; i++) {
@@ -83,6 +71,16 @@ public class Matrix4 {
         m.setAt(a1, a2, Math.sin(angle));
         m.setAt(a2, a1, -Math.sin(angle));
         m.setAt(a2, a2, Math.cos(angle));
+
+        return m;
+    }
+
+    public static Matrix4 move(Vector3 v){
+        Matrix4 m = Matrix4.one();
+
+        m.setAt(2,0,v.getX());
+        m.setAt(2,1,v.getY());
+        m.setAt(2,2,v.getZ());
 
         return m;
     }
