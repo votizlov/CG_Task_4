@@ -41,9 +41,9 @@ public class DrawPanel extends JPanel implements MouseListener, MouseMotionListe
                 switch (e.getKeyCode()) {
                     case  KeyEvent.VK_R:  isRendererActive = !isRendererActive;
                     break;
-                    case KeyEvent.VK_UP:cam.scale.moveX(1);
+                    case KeyEvent.VK_UP:cam.translate.moveX(0.1);
                     break;
-                    case KeyEvent.VK_DOWN:cam.scale.moveX(-1);
+                    case KeyEvent.VK_DOWN:cam.translate.moveX(-0.1);
                     break;
                     case KeyEvent.VK_RIGHT:cam.translate.moveY(1);
                     break;
@@ -62,6 +62,11 @@ public class DrawPanel extends JPanel implements MouseListener, MouseMotionListe
             g.drawImage(scene.drawScene(sc, cam), 0, 0, null);
         else
             g.drawImage(renderer.renderImage(),0,0,null);
+        for(int i = 0;i<4;i++) {
+            for (int j = 0; j < 4; j++)
+                System.out.print(cam.rotate.getAt(i,j)+" ");
+            System.out.println("\n");
+        }
     }
 
     private ScreenPoint last = null;
