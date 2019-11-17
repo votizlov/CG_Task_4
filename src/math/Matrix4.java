@@ -43,6 +43,18 @@ public class Matrix4 {
         return m;
     }
 
+    public void moveX(double dX) {
+        this.setAt(3,0,getAt(3,0)+dX);
+    }
+
+    public void moveY(double dX) {
+        this.setAt(3,1,getAt(3,1)+dX);
+    }
+
+    public void moveZ(double dX) {
+        this.setAt(3,2,getAt(3,2)+dX);
+    }
+
     public Vector4 mul(Vector4 v) {
         double[] r = new double[4];
         for (int i = 0; i < 4; i++) {
@@ -75,6 +87,12 @@ public class Matrix4 {
         return m;
     }
 
-
+    public void add(Matrix4 matrix4){//todo vibe check
+        for (int i = 0;i<4;i++){
+            for (int j = 0;j<4;j++){
+                this.setAt(i,j,this.getAt(i,j)+matrix4.getAt(i,j));
+            }
+        }
+    }
 
 }
