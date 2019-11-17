@@ -1,4 +1,6 @@
 import javax.swing.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class Main {
 
@@ -7,7 +9,9 @@ public class Main {
         frame.setSize(500, 500);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         DrawPanel p = new DrawPanel();
-        frame.setContentPane(p);
+        frame.add(p);
+        p.setFocusable(true);
+        p.grabFocus();
         frame.setVisible(true);
     }
 
