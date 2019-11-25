@@ -19,6 +19,7 @@ import main.math.Vector4;
 import main.screen.ScreenConverter;
 import main.screen.ScreenPoint;
 import main.third.Camera;
+import main.third.ICamera;
 
 
 public class CameraController implements MouseListener, MouseMotionListener, MouseWheelListener {
@@ -73,15 +74,15 @@ public class CameraController implements MouseListener, MouseMotionListener, Mou
     
     /*=============== Конец паттерна "слушатель" ==================*/
     
-    private Camera camera;
+    private ICamera camera;
     private ScreenConverter sc;
 
-    public CameraController(Camera camera, ScreenConverter sc) {
+    public CameraController(ICamera camera, ScreenConverter sc) {
         this.camera = camera;
         this.sc = sc;
     }
 
-    public Camera getCamera() {
+    public ICamera getCamera() {
         return camera;
     }
 

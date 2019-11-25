@@ -133,4 +133,8 @@ public final class Matrix4Factories {
     public static Matrix4 centralProjection(float point, Axis axis) {
         return centralProjection(point, axis == Axis.X ? 0 : axis == Axis.Y ? 1 : 2);
     }
+
+    public static Matrix4 cameraProjectionMatrix(){
+        return new Matrix4(new float[][]{{(float) Math.toRadians(60),0,0,0},{0,1,0,0},{0,0,0.1f,0},{0,0,0,100}});
+    }
 }

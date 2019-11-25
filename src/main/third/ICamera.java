@@ -4,6 +4,7 @@
  */
 package main.third;
 
+import main.math.Matrix4;
 import main.math.Vector3;
 
 /**
@@ -17,5 +18,9 @@ public interface ICamera {
      * @param v преобразуемая точка
      * @return новая точка
      */
-    public Vector3 w2s(Vector3 v);
+    Vector3 w2s(Vector3 v);
+    void modifyRotate(Matrix4 dp);
+    void modifyTranslate(Matrix4 dp);
+    void modifyProjection(Matrix4 dp);
+    void modifyScale(Matrix4 dp);
 }

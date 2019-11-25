@@ -19,6 +19,8 @@ import main.obj.ObjReader;
 import main.obj.ObjUtils;
 import main.screen.ScreenConverter;
 import main.third.Camera;
+import main.third.ICamera;
+import main.third.MyCamera;
 import main.third.Scene;
 import models.OBJModel;
 import models.Parallelepiped;
@@ -31,13 +33,13 @@ public class DrawPanel extends JPanel
         implements CameraController.RepaintListener {
     private Scene scene;
     private ScreenConverter sc;
-    private Camera cam;
+    private ICamera cam;
     private CameraController camController;
     
     public DrawPanel() {
         super();
         sc = new ScreenConverter(-1, 1, 2, 2, 1, 1);
-        cam = new Camera();
+        cam = new MyCamera();
         camController = new CameraController(cam, sc);
         scene = new Scene(Color.WHITE.getRGB());
         scene.showAxes();
@@ -47,13 +49,18 @@ public class DrawPanel extends JPanel
                 new Vector3(0.4f, 0.4f, 0.4f)
         ));
 
-        Obj obj = null;
+        scene.getModelsList().add(new Parallelepiped(
+                new Vector3(-1,-1,-1),
+                new Vector3(1,1,1)
+        ));
+
+        /*Obj obj = null;
         try {
-            obj = ObjUtils.convertToRenderable(ObjReader.read(new FileInputStream("src/models/radio_high.obj")));
+            obj = ObjUtils.convertToRenderable(ObjReader.read(new FileInputStream("src/models/CyberpunkDeLorean.obj")));
             scene.getModelsList().add(new OBJModel(obj));
         } catch (IOException e) {
             e.printStackTrace();
-        }
+        }*/
 
         camController.addRepaintListener(this);
         addMouseListener(camController);

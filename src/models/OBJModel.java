@@ -26,11 +26,12 @@ public class OBJModel implements IModel {
 
     public OBJModel(Obj obj) {
         lines = new LinkedList<>();
-        for(int i = 0;i<obj.getNumVertices()-4;i+=4){
+        for(int i = 0;i<obj.getNumVertices()-5;i+=5){
             lines.add(new PolyLine3D(Arrays.asList(new Vector3(obj.getVertex(i).getX(), obj.getVertex(i).getY(), obj.getVertex(i).getZ()),
                     new Vector3(obj.getVertex(i+1).getX(), obj.getVertex(i+1).getY(), obj.getVertex(i+1).getZ()),
                     new Vector3(obj.getVertex(i+2).getX(), obj.getVertex(i+2).getY(), obj.getVertex(i+2).getZ()),
-                    new Vector3(obj.getVertex(i+3).getX(), obj.getVertex(i+3).getY(), obj.getVertex(i+3).getZ())), true));
+                    new Vector3(obj.getVertex(i+3).getX(), obj.getVertex(i+3).getY(), obj.getVertex(i+3).getZ()),
+                    new Vector3(obj.getVertex(i+4).getX(),obj.getVertex(i+4).getY(),obj.getVertex(i+4).getZ())), true));
         }
     }
 }

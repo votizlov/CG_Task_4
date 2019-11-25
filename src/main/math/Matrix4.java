@@ -7,7 +7,6 @@ package main.math;
 /**
  * Класс описывающий матрицу 4 на 4.
  * Такие матрицы можно использовать для применения матричных преобразований
- * @author Alexey
  */
 public class Matrix4 {
     private float[] matrix;
