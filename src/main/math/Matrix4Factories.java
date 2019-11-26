@@ -141,4 +141,32 @@ public final class Matrix4Factories {
         float s = (float) (1/tan(fov/2*PI/180));
         return new Matrix4(new float[][]{{s,0,0,0},{0,s,0,0},{0,0, (float) (-farClipping/(farClipping-nearClipping)),0},{0,0, 0,(float) (-farClipping*nearClipping/(farClipping-nearClipping))}});
     }
+
+    public static Matrix4 cameraViewMatrix(Vector3 eye,Vector3 center,Vector3 top){
+        Vector3 z = new Vector3(eye.extract(center));
+        z.normalize();
+        Vector3 y = top;
+        Vector3 x = y.cross(z);
+        y = z.cross(x);
+        x.normalize;
+        y.normalize;
+        Matrix[0][0] = X.x;
+        Matrix[1][0] = X.y;
+        Matrix[2][0] = X.z;
+        Matrix[3][0] = -X.Dot( Eye );
+        Matrix[0][1] = Y.x;
+        Matrix[1][1] = Y.y;
+        Matrix[2][1] = Y.z;
+        Matrix[3][1] = -Y.Dot( Eye );
+        Matrix[0][2] = Z.x;
+        Matrix[1][2] = Z.y;
+        Matrix[2][2] = Z.z;
+        Matrix[3][2] = -Z.Dot( Eye );
+        Matrix[0][3] = 0;
+        Matrix[1][3] = 0;
+        Matrix[2][3] = 0;
+        Matrix[3][3] = 1.0f;
+
+        return new Matrix4(new float[][]{{x.getX(),y.getX(),z.getX(),x.dot(eye).minus()},{x.getY(),y.getY(),z.getY(),y.dot(eye).minus},{x.getZ(),y.getZ(), z.getZ(),z.dot(eye).minus},{0,0, 0,1}});
+    }
 }

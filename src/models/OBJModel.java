@@ -26,12 +26,12 @@ public class OBJModel implements IModel {
 
     public OBJModel(Obj obj) {
         lines = new LinkedList<>();
-        for(int i = 0;i<obj.getNumVertices()-5;i+=5){
-            lines.add(new PolyLine3D(Arrays.asList(new Vector3(obj.getVertex(i).getX(), obj.getVertex(i).getY(), obj.getVertex(i).getZ()),
-                    new Vector3(obj.getVertex(i+1).getX(), obj.getVertex(i+1).getY(), obj.getVertex(i+1).getZ()),
-                    new Vector3(obj.getVertex(i+2).getX(), obj.getVertex(i+2).getY(), obj.getVertex(i+2).getZ()),
-                    new Vector3(obj.getVertex(i+3).getX(), obj.getVertex(i+3).getY(), obj.getVertex(i+3).getZ()),
-                    new Vector3(obj.getVertex(i+4).getX(),obj.getVertex(i+4).getY(),obj.getVertex(i+4).getZ())), true));
+        LinkedList<Vector3> line = new LinkedList<>();
+        for(int i = 0;i<obj.getNumFaces();i++){
+            for (int j = 0;j<obj.getFace(i).getNumVertices();j++)
+                line.add(new Vector3(obj.getVertex(obj.getFace(i).getVertexIndex(j)).getX(),obj.getVertex(obj.getFace(i).getVertexIndex(j)).getY(),obj.getVertex(obj.getFace(i).getVertexIndex(j)).getZ()));
+            lines.add(new PolyLine3D(line, true));
+            line.clear();
         }
     }
 }

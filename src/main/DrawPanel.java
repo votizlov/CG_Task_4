@@ -19,6 +19,7 @@ import main.obj.Obj;
 import main.obj.ObjReader;
 import main.obj.ObjUtils;
 import main.screen.ScreenConverter;
+import main.third.Camera;
 import main.third.ICamera;
 import main.third.LookAtCamera;
 import main.third.Scene;
@@ -52,14 +53,14 @@ public class DrawPanel extends JPanel
                 new Vector3(-1,-1,-1),
                 new Vector3(1,1,1)
         ));
-/*
+
         Obj obj = null;
         try {
             obj = ObjUtils.convertToRenderable(ObjReader.read(new FileInputStream("src/models/only_quad_sphere.obj")));
             scene.getModelsList().add(new OBJModel(obj));
         } catch (IOException e) {
             e.printStackTrace();
-        }*/
+        }
 
         camController.addRepaintListener(this);
         addMouseListener(camController);

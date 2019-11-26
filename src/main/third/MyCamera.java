@@ -3,15 +3,15 @@ package main.third;
 import main.math.*;
 
 public class MyCamera implements ICamera {
-    private Matrix4 translate, rotate, scale, projection;
-    private Matrix3x4 view;
+    private Matrix4 translate, rotate, scale, projection,view;
+    //private Matrix3x4 view;
 
     public MyCamera() {
         translate = Matrix4.one();
         rotate = Matrix4.one();
         scale = Matrix4.one();
-        projection = Matrix4Factories.cameraProjectionMatrix();
-        view = Matrix3x4.one();
+        projection = Matrix4Factories.cameraProjectionMatrix(60,0.1,100);
+        view = Matrix4Factories.cameraViewMatrix(new Vector3(0,0,4),new Vector3(0,0,0),new Vector3(0,1,0));
     }
 
     /**

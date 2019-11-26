@@ -12,7 +12,7 @@ public class LookAtCamera implements ICamera {
         scale = Matrix4.one();
         projection = Matrix4Factories.cameraProjectionMatrix(90,0.1,10);
         camera = Matrix4.lookAtCameraMatrix();
-        //view = camera.invert();
+        view = Matrix4Factories.cameraViewMatrix(new Vector3(0,0,4),new Vector3(0,0,0),new Vector3(0,1,0));
     }
 
     /**
@@ -26,7 +26,7 @@ public class LookAtCamera implements ICamera {
     @Override
     public Vector3 w2s(Vector3 v) {
         return projection.mul(
-                camera.mul(
+                view.mul(
                         translate.mul(
                                 rotate.mul(
                                         scale.mul(
