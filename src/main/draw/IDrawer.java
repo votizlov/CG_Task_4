@@ -22,4 +22,6 @@ public interface IDrawer {
     public void draw(Collection<PolyLine3D> polyline);
 
     void drawPolygons();
+
+    void drawCounters();
 }

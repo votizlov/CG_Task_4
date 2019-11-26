@@ -4,6 +4,9 @@
  */
 package main.math;
 
+import static java.lang.Math.PI;
+import static java.lang.Math.tan;
+
 /**
  * Класс, хранящий методы создания особых матриц.
  * @author Alexey
@@ -134,7 +137,8 @@ public final class Matrix4Factories {
         return centralProjection(point, axis == Axis.X ? 0 : axis == Axis.Y ? 1 : 2);
     }
 
-    public static Matrix4 cameraProjectionMatrix(){
-        return new Matrix4(new float[][]{{(float) Math.toRadians(60),0,0,0},{0,1,0,0},{0,0,0.1f,0},{0,0,0,100}});
+    public static Matrix4 cameraProjectionMatrix(double fov,double nearClipping,double farClipping){
+        float s = (float) (1/tan(fov/2*PI/180));
+        return new Matrix4(new float[][]{{s,0,0,0},{0,s,0,0},{0,0, (float) (-farClipping/(farClipping-nearClipping)),0},{0,0, 0,(float) (-farClipping*nearClipping/(farClipping-nearClipping))}});
     }
 }

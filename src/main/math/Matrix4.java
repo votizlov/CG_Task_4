@@ -33,7 +33,13 @@ public class Matrix4 {
     private Matrix4(float[] arr) {
         matrix = arr;
     }
-    
+
+    public static Matrix4 lookAtCameraMatrix() {
+        Matrix4 orientation = new Matrix4(new float[][]{{1,0,1,0},{0,1,0,0},{0,0,1,0},{0,0,0,1}});
+        Matrix4 translation = new Matrix4(new float[][]{{1,0,0,0},{0,1,0,0},{0,0,1,0},{10,10,10,1}});
+        return orientation.mul(translation);
+    }
+
     /**
      * Возвращает значение элемента матрицы по заданным индексам
      * @param row номер строки
@@ -111,5 +117,13 @@ public class Matrix4 {
                     r.setAt(i, j, r.getAt(i, j) + 
                             this.getAt(i, k) * m.getAt(k, j));
         return r;
+    }
+
+    public Matrix4 invert() {
+        return this.mul(1/det());
+    }
+
+    public float det() {
+        return 0; //matrix[0]*(matrix[5]*())-matrix[1]*()+matrix[2]*()-matrix[3]*();
     }
 }

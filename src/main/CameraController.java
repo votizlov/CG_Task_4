@@ -5,11 +5,7 @@
 package main;
 
 import java.awt.Point;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
-import java.awt.event.MouseWheelEvent;
-import java.awt.event.MouseWheelListener;
+import java.awt.event.*;
 import java.util.HashSet;
 import java.util.Set;
 import javax.swing.SwingUtilities;
@@ -23,7 +19,7 @@ import main.third.ICamera;
 
 
 public class CameraController implements MouseListener, MouseMotionListener, MouseWheelListener {
-    
+
     /*=============== Начало паттерна "слушатель" ==================*/
     /* Реализация паттерна слушатель для оповещения всех желающих о каком-либо событии */
     

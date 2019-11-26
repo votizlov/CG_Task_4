@@ -57,9 +57,9 @@ public class Scene {
     }
     
     private static final List<Line3D> axes = Arrays.asList(
-            new Line3D(new Vector3(0, 0, 0), new Vector3(1, 0, 0)),
-            new Line3D(new Vector3(0, 0, 0), new Vector3(0, 1, 0)),
-            new Line3D(new Vector3(0, 0, 0), new Vector3(0, 0, 1))
+            new Line3D(new Vector3(0, 0, 0), new Vector3(100, 0, 0)),
+            new Line3D(new Vector3(0, 0, 0), new Vector3(0, 100, 0)),
+            new Line3D(new Vector3(0, 0, 0), new Vector3(0, 0, 100))
     );
     
     /**
@@ -93,5 +93,6 @@ public class Scene {
         drawer.draw(lines);
         if(drawPolygons)
             drawer.drawPolygons();
+        drawer.drawCounters();
     }
 }

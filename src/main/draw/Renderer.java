@@ -1,10 +1,13 @@
 package main.draw;
 
+import main.screen.ScreenConverter;
+import main.third.Camera;
+import main.third.Scene;
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class Renderer {
-    /*
     private ScreenConverter sc;
     private Camera cam;
     private Scene scene;
@@ -16,9 +19,10 @@ public class Renderer {
     }
 
     public Image renderImage() {
-        BufferedImage bi = new BufferedImage(sc.getWs(),sc.getHs(),BufferedImage.TYPE_INT_RGB);
+        BufferedImage bi = new BufferedImage(sc.getWs(), sc.getHs(), BufferedImage.TYPE_INT_RGB);
         for (int j = 0; j < sc.getWs(); ++j) {
             for (int i = 0; i < sc.getHs(); ++i) {
+                /*
                 // compute primary ray direction
                 Ray primRay;
                 computePrimRay(i, j, &primRay);
@@ -52,9 +56,11 @@ public class Renderer {
                     pixels[i][j] = object->color * light.brightness;
                 else
                     pixels[i][j] = 0;
+
+                 */
             }
+
         }
         return bi;
     }
-    */
 }

@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package models;
 
 import java.util.Arrays;
@@ -24,7 +20,7 @@ public class Line3D implements IModel {
     public List<PolyLine3D> getLines() {
         return Arrays.asList(new PolyLine3D(
                 Arrays.asList(p1, p2)
-            , false));
+                , false));
     }
 
     @Override
