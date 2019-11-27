@@ -4,13 +4,12 @@
  */
 package main.math;
 
+import javax.swing.*;
+
 import static java.lang.Math.pow;
 import static java.lang.Math.sqrt;
 
-/**
- * Класс, хранящий трёхмерный вектор / точку в трёхмерном пространстве.
- * @author Alexey
- */
+
 public class Vector3 {
     private float[] values; /*Значения хранятся в виде массива из трёх элементов*/
     
@@ -75,5 +74,35 @@ public class Vector3 {
      */
     public double getDistance(Vector3 point2){
         return sqrt(pow(point2.getX()-getX(),2)+pow(point2.getY()-getY(),2)+pow(point2.getZ()-getZ(),2));
+    }
+
+    //The dot product is a float value equal to the magnitudes of the two vectors multiplied together and then multiplied by the cosine of the angle between them.
+    //Скалярное произведение
+    public double dot(Vector3 eye) {
+        double r = 0;
+        for (float i:values
+             ) {
+            for (float j:eye.values
+                 ) {
+                r+=i*j;
+            }
+        }
+        return r;
+    }
+
+    //верторное произведение
+    public Vector3 cross(Vector3 b) {
+        return new Vector3(getY()*b.getZ()-getZ()*b.getY(),getZ()*b.getX()-getX()*b.getZ(),getX()*b.getY()-getY()*b.getX());
+    }
+    //нормализация
+    public void normalize() {
+        float l = 1/length();
+        values[0]*=l;
+        values[1]*=l;
+        values[2]*=l;
+    }
+    //разность
+    public Vector3 extract(Vector3 center) {
+        return new Vector3(getX()-center.getX(),getY()-center.getY(),getZ()-center.getZ());
     }
 }

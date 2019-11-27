@@ -10,7 +10,7 @@ public class MyCamera implements ICamera {
         translate = Matrix4.one();
         rotate = Matrix4.one();
         scale = Matrix4.one();
-        projection = Matrix4Factories.cameraProjectionMatrix(60,0.1,100);
+        projection = Matrix4Factories.cameraProjectionMatrix(60,0.1,100,1);
         view = Matrix4Factories.cameraViewMatrix(new Vector3(0,0,4),new Vector3(0,0,0),new Vector3(0,1,0));
     }
 

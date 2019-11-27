@@ -48,12 +48,7 @@ public class DrawPanel extends JPanel
                 new Vector3(-0.4f, -0.4f, -0.4f),
                 new Vector3(0.4f, 0.4f, 0.4f)
         ));
-
-        scene.getModelsList().add(new Parallelepiped(
-                new Vector3(-1,-1,-1),
-                new Vector3(1,1,1)
-        ));
-
+/*
         Obj obj = null;
         try {
             obj = ObjUtils.convertToRenderable(ObjReader.read(new FileInputStream("src/models/only_quad_sphere.obj")));
@@ -61,7 +56,7 @@ public class DrawPanel extends JPanel
         } catch (IOException e) {
             e.printStackTrace();
         }
-
+*/
         camController.addRepaintListener(this);
         addMouseListener(camController);
         addMouseMotionListener(camController);

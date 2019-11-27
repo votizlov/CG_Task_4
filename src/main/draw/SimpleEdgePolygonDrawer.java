@@ -25,7 +25,7 @@ public class SimpleEdgePolygonDrawer extends ScreenGraphicsDrawer {
 
     public SimpleEdgePolygonDrawer(ScreenConverter sc, Graphics2D g) {
         super(sc, g);
-        pointLight = new PointLight(new Vector3(-10, -10, -10), 100, 5, Color.ORANGE);
+        pointLight = new PointLight(new Vector3(-10, -10, -10), 200, 5, Color.ORANGE);
     }
 
     /**
@@ -52,7 +52,7 @@ public class SimpleEdgePolygonDrawer extends ScreenGraphicsDrawer {
         /*если линия замкнута - рисем полиго, иначе - полилинию*/
         if (polyline.isClosed()) {
             getGraphics().drawPolygon(crds.getXx(), crds.getYy(), crds.size());
-            k = pow((getFaceDistance(polyline) * pointLight.getdIntensity()) / pointLight.getIntensity(),3);
+            k = pow((getFaceDistance(polyline) * pointLight.getdIntensity()) / pointLight.getIntensity(),6);
             if (k > 1)
                 k = 0;
             //getGraphics().setColor(new Color((int) (250 * k), (int) (218 * k), (int) (94 * k)));

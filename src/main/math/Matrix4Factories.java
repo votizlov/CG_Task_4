@@ -137,36 +137,45 @@ public final class Matrix4Factories {
         return centralProjection(point, axis == Axis.X ? 0 : axis == Axis.Y ? 1 : 2);
     }
 
-    public static Matrix4 cameraProjectionMatrix(double fov,double nearClipping,double farClipping){
-        float s = (float) (1/tan(fov/2*PI/180));
-        return new Matrix4(new float[][]{{s,0,0,0},{0,s,0,0},{0,0, (float) (-farClipping/(farClipping-nearClipping)),0},{0,0, 0,(float) (-farClipping*nearClipping/(farClipping-nearClipping))}});
+    public static Matrix4 cameraProjectionMatrix(double fov,double nearClipping,double farClipping,double aspect){
+        /*float s = (float) (1/tan(fov/2*PI/180));
+        return new Matrix4(new float[][]{{s,0,0,0},{0,s,0,0},{0,0, (float) (-farClipping/(farClipping-nearClipping)),0},{0,0, 0,(float) (-farClipping*nearClipping/(farClipping-nearClipping))}});*/
+        double top =nearClipping*tan(PI/180*fov/2);
+        double bottom = -top;
+        double right = top*aspect;
+        double left = -right;
+        return new Matrix4(new float[][]{{(float) (2*nearClipping/(right-left)),0, (float) ((right+left)/(right-left)),0},
+                {0, (float) (2*nearClipping/(top-bottom)), (float) ((top+bottom)/(top-bottom)),0},
+                {0,0, (float) (-(farClipping+nearClipping)/(farClipping-nearClipping)), (float) (-2*farClipping*nearClipping/(farClipping-nearClipping))},
+                {0,0, -1,0}});
     }
 
     public static Matrix4 cameraViewMatrix(Vector3 eye,Vector3 center,Vector3 top){
-        Vector3 z = new Vector3(eye.extract(center));
+        Matrix4 m = Matrix4.zero();
+        Vector3 z = eye.extract(center);
         z.normalize();
         Vector3 y = top;
         Vector3 x = y.cross(z);
         y = z.cross(x);
-        x.normalize;
-        y.normalize;
-        Matrix[0][0] = X.x;
-        Matrix[1][0] = X.y;
-        Matrix[2][0] = X.z;
-        Matrix[3][0] = -X.Dot( Eye );
-        Matrix[0][1] = Y.x;
-        Matrix[1][1] = Y.y;
-        Matrix[2][1] = Y.z;
-        Matrix[3][1] = -Y.Dot( Eye );
-        Matrix[0][2] = Z.x;
-        Matrix[1][2] = Z.y;
-        Matrix[2][2] = Z.z;
-        Matrix[3][2] = -Z.Dot( Eye );
-        Matrix[0][3] = 0;
-        Matrix[1][3] = 0;
-        Matrix[2][3] = 0;
-        Matrix[3][3] = 1.0f;
+        x.normalize();
+        y.normalize();
+        m.setAt(0,0, x.getX());
+        m.setAt(1,0, x.getY());
+        m.setAt(2,0, x.getZ());
+        m.setAt(3,0, (float) -x.dot( eye ));
+        m.setAt(0,1, y.getX());
+        m.setAt(1,1, y.getY());
+        m.setAt(2,1, y.getZ());
+        m.setAt(3,1, (float) -y.dot( eye ));
+        m.setAt(0,2, z.getX());
+        m.setAt(1,2, z.getY());
+        m.setAt(2,2, z.getZ());
+        m.setAt(3,2, (float) -z.dot( eye ));
+        //m.setAt(0,3, 0);
+        //[1][3] = 0;
+        //Matrix[2][3] = 0;
+        m.setAt(3,3, 1.0f);
 
-        return new Matrix4(new float[][]{{x.getX(),y.getX(),z.getX(),x.dot(eye).minus()},{x.getY(),y.getY(),z.getY(),y.dot(eye).minus},{x.getZ(),y.getZ(), z.getZ(),z.dot(eye).minus},{0,0, 0,1}});
+        return m;//new Matrix4(new float[][]{{x.getX(),y.getX(),z.getX(), (float) -x.dot(eye)},{x.getY(),y.getY(),z.getY(), (float) -y.dot(eye)},{x.getZ(),y.getZ(), z.getZ(), (float) -z.dot(eye)},{0,0, 0,1}});
     }
 }
