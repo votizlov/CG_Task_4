@@ -4,6 +4,9 @@
  */
 package main.third;
 
+import main.draw.Ray;
+import main.math.Vector3;
+
 import java.util.List;
 
 /**
@@ -17,4 +20,5 @@ public interface IModel {
      */
     List<PolyLine3D> getLines();
     Material getMat();
+    Vector3 checkRayCollision(Ray r);
 }

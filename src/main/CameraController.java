@@ -184,7 +184,7 @@ public class CameraController implements MouseListener, MouseMotionListener, Mou
                 float length = cur.add(zero.mul(-1)).asVector3().length();
                 if (dy < 0)
                     length = -length;
-                System.out.println(length);
+                //System.out.println(length); todo чтоб не потерять важный дебаг
                 camera.modifyTranslate(Matrix4Factories.translation(0, 0, length));
             }
         }

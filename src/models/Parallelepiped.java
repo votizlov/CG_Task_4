@@ -7,6 +7,8 @@ package models;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+
+import main.draw.Ray;
 import main.math.Vector3;
 import main.third.IModel;
 import main.third.Material;
@@ -15,6 +17,7 @@ import main.third.PolyLine3D;
 
 public class Parallelepiped implements IModel {
     private Vector3 LTF, RBN;
+    private Material m;
 
     /**
      * Создаёт экземпляр параллелипипеда
@@ -25,7 +28,13 @@ public class Parallelepiped implements IModel {
         this.LTF = LTF;
         this.RBN = RBN;
     }
-    
+
+    public Parallelepiped(Vector3 vector3, Vector3 vector31, Material material) {
+        this.LTF = vector3;
+        this.RBN = vector31;
+        this.m = material;
+    }
+
 
     @Override
     public List<PolyLine3D> getLines() {
@@ -80,6 +89,11 @@ public class Parallelepiped implements IModel {
 
     @Override
     public Material getMat() {
+        return null;
+    }
+
+    @Override
+    public Vector3 checkRayCollision(Ray r) {
         return null;
     }
 
