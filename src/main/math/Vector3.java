@@ -105,4 +105,12 @@ public class Vector3 {
     public Vector3 extract(Vector3 center) {
         return new Vector3(getX()-center.getX(),getY()-center.getY(),getZ()-center.getZ());
     }
+
+    public Vector3 add(Vector3 v){
+        return new Vector3(getX()+v.getX(),getY()+v.getY(),getZ()+v.getZ());
+    }
+
+    public Vector3 mul(float l) {
+        return new Vector3(getX()*l,getY()*l,getZ()*l);
+    }
 }

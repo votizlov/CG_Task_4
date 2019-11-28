@@ -16,9 +16,35 @@ import main.screen.ScreenConverter;
 import main.screen.ScreenPoint;
 import main.third.Camera;
 import main.third.ICamera;
+import org.w3c.dom.ls.LSOutput;
 
 
-public class CameraController implements MouseListener, MouseMotionListener, MouseWheelListener {
+public class CameraController implements MouseListener, MouseMotionListener, MouseWheelListener, KeyListener {
+    @Override
+    public void keyTyped(KeyEvent keyEvent) {
+        System.out.println("a");
+    }
+
+    @Override
+    public void keyPressed(KeyEvent keyEvent) {
+        System.out.println("a");
+        switch (keyEvent.getKeyCode()){
+            case KeyEvent.VK_A:
+                camera.modifyCameraPos(new Vector3(1,0,0));
+            break;
+            case KeyEvent.VK_S:
+                camera.modifyCameraPos(new Vector3(0,1,0));
+            break;
+            case KeyEvent.VK_D:
+                camera.modifyCameraPos(new Vector3(0,0,1));
+            break;
+        }
+    }
+
+    @Override
+    public void keyReleased(KeyEvent keyEvent) {
+
+    }
 
     /*=============== Начало паттерна "слушатель" ==================*/
     /* Реализация паттерна слушатель для оповещения всех желающих о каком-либо событии */
@@ -163,6 +189,8 @@ public class CameraController implements MouseListener, MouseMotionListener, Mou
                         Matrix4Factories.rotationXYZ(db, Matrix4Factories.Axis.X)
                     )
                 );
+
+                camera.modifyCameraPos(new Vector3(1,1,1));
             }
             /*Если двигаем с зажатой правой кнопкой мыши, то перемещаем камеру вдоль осей X и Y*/
             if (rightFlag) {

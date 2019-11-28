@@ -71,6 +71,11 @@ public class Camera implements ICamera {
         this.scale = dp.mul(this.scale);
     }
 
+    @Override
+    public void modifyCameraPos(Vector3 vector3) {
+
+    }
+
     public Matrix4 getScale() {
         return scale;
     }
@@ -91,5 +96,7 @@ public class Camera implements ICamera {
         this.translate = translate;
     }
 
-
+    public Vector3 getCameraPos(){
+        return new Vector3(translate.getAt(3,0),translate.getAt(3,1),translate.getAt(3,2));
+    }
 }

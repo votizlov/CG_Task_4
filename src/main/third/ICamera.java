@@ -23,4 +23,6 @@ public interface ICamera {
     void modifyTranslate(Matrix4 dp);
     void modifyProjection(Matrix4 dp);
     void modifyScale(Matrix4 dp);
+
+    void modifyCameraPos(Vector3 vector3);
 }

@@ -19,6 +19,7 @@ public class Main {
         JFrame frame = new JFrame();
         frame.setSize(600, 600);
         frame.setUndecorated(true);
+        frame.requestFocus();
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.add(new DrawPanel());
         frame.setVisible(true);

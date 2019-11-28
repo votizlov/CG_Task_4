@@ -39,7 +39,7 @@ public class DrawPanel extends JPanel
     public DrawPanel() {
         super();
         sc = new ScreenConverter(-1, 1, 2, 2, 1, 1);
-        cam = new Camera();
+        cam = new LookAtCamera();
         camController = new CameraController(cam, sc);
         scene = new Scene(Color.WHITE.getRGB());
         scene.showAxes();
@@ -62,6 +62,7 @@ public class DrawPanel extends JPanel
         addMouseListener(camController);
         addMouseMotionListener(camController);
         addMouseWheelListener(camController);
+        addKeyListener(camController);
     }
 
     @Override

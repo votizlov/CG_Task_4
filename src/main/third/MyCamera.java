@@ -65,6 +65,11 @@ public class MyCamera implements ICamera {
         this.scale = dp.mul(this.scale);
     }
 
+    @Override
+    public void modifyCameraPos(Vector3 vector3) {
+
+    }
+
     public Matrix4 getScale() {
         return scale;
     }
