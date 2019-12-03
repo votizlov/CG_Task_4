@@ -76,6 +76,16 @@ public class Camera implements ICamera {
 
     }
 
+    @Override
+    public Vector3 getCameraDir() {
+        return new Vector3(translate.getAt(3,0),translate.getAt(3,1),translate.getAt(3,2));
+    }
+
+    @Override
+    public float getFov() {
+        return 60;
+    }
+
     public Matrix4 getScale() {
         return scale;
     }

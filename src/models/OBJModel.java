@@ -17,6 +17,7 @@ public class OBJModel implements IModel {
     private Material m;
 
     public OBJModel(Obj obj, Material material) {
+        System.out.println("Vertices " + obj.getNumVertices() + " Faces " + obj.getNumFaces());
         lines = new LinkedList<>();
         LinkedList<Vector3> line = new LinkedList<>();
         for(int i = 0;i<obj.getNumFaces();i++){

@@ -70,6 +70,16 @@ public class MyCamera implements ICamera {
 
     }
 
+    @Override
+    public Vector3 getCameraDir() {
+        return null;
+    }
+
+    @Override
+    public float getFov() {
+        return 0;
+    }
+
     public Matrix4 getScale() {
         return scale;
     }

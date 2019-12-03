@@ -11,6 +11,8 @@ import java.util.List;
 import main.math.Matrix3;
 import main.math.Vector3;
 
+import static java.lang.Math.*;
+
 
 public class PolyLine3D {
     private List<Vector3> points;
@@ -59,11 +61,31 @@ public class PolyLine3D {
         return sum / points.size();
     }
 
-    public boolean checkRayCollision(Vector3 point) {// https://www.tutorialspoint.com/computer_graphics/computer_graphics_surfaces.htm
-        double a = new Matrix3(new float[][]{{1, points.get(0).getY(), points.get(0).getZ()}, {1, points.get(1).getY(), points.get(1).getZ()}, {1, points.get(2).getY(), points.get(2).getZ()}}).det();
-        double b = new Matrix3(new float[][]{{1, points.get(0).getY(), points.get(0).getZ()}, {1, points.get(1).getY(), points.get(1).getZ()}, {1, points.get(2).getY(), points.get(2).getZ()}}).det();
-        double c = new Matrix3(new float[][]{{1, points.get(0).getY(), points.get(0).getZ()}, {1, points.get(1).getY(), points.get(1).getZ()}, {1, points.get(2).getY(), points.get(2).getZ()}}).det();
-        double d = -new Matrix3(new float[][]{{1, points.get(0).getY(), points.get(0).getZ()}, {1, points.get(1).getY(), points.get(1).getZ()}, {1, points.get(2).getY(), points.get(2).getZ()}}).det();
-        return a * point.getX() + b * point.getY() + c * point.getZ() + d < 0;
+    public boolean checkRayCollision(Vector3 point,float precision) {// https://www.tutorialspoint.com/computer_graphics/computer_graphics_surfaces.htm
+        /*if(points.size()!=4) {
+            double a = new Matrix3(new float[][]{{1, points.get(0).getY(), points.get(0).getZ()}, {1, points.get(1).getY(), points.get(1).getZ()}, {1, points.get(2).getY(), points.get(2).getZ()}}).det();
+            double b = new Matrix3(new float[][]{{1, points.get(0).getY(), points.get(0).getZ()}, {1, points.get(1).getY(), points.get(1).getZ()}, {1, points.get(2).getY(), points.get(2).getZ()}}).det();
+            double c = new Matrix3(new float[][]{{1, points.get(0).getY(), points.get(0).getZ()}, {1, points.get(1).getY(), points.get(1).getZ()}, {1, points.get(2).getY(), points.get(2).getZ()}}).det();
+            double d = -new Matrix3(new float[][]{{1, points.get(0).getY(), points.get(0).getZ()}, {1, points.get(1).getY(), points.get(1).getZ()}, {1, points.get(2).getY(), points.get(2).getZ()}}).det();
+            return a * point.getX() + b * point.getY() + c * point.getZ() + d < 0;
+        } else { */
+
+        LinkedList<Vector3> centerPointsV = new LinkedList<>();
+        for (Vector3 v:points
+             ) {
+            centerPointsV.add(new Vector3(point,v));
+        }
+        double cos = 0;
+        Vector3 line = centerPointsV.getFirst();
+        Vector3 line2;
+        for(int i = 1;i<centerPointsV.size();i++){
+            line2 = centerPointsV.get(i);
+            cos += cos(line.dot(line2)/(line.length()*line2.length()));
+        }
+
+        if(cos - 2*PI < precision){
+            return true;
+        } else
+            return false;
     }
 }

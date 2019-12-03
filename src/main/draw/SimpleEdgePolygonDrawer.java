@@ -53,12 +53,11 @@ public class SimpleEdgePolygonDrawer extends ScreenGraphicsDrawer {
         if (polyline.isClosed()) {
             getGraphics().drawPolygon(crds.getXx(), crds.getYy(), crds.size());
             k = (getFaceDistance(polyline) * pointLight.getdIntensity()) / pointLight.getIntensity();
-            System.out.println(k);
             if (k > 1)
                 k = 0;
             getGraphics().setColor(new Color((int) (250 * k), (int) (218 * k), (int) (94 * k)));
             //getGraphics().setColor(Color.ORANGE);
-            //getGraphics().fillPolygon(crds.getXx(), crds.getYy(), crds.size());
+            getGraphics().fillPolygon(crds.getXx(), crds.getYy(), crds.size());
         } else
         getGraphics().drawPolyline(crds.getXx(), crds.getYy(), crds.size());
     }

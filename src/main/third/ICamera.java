@@ -25,4 +25,10 @@ public interface ICamera {
     void modifyScale(Matrix4 dp);
 
     void modifyCameraPos(Vector3 vector3);
+
+    Vector3 getCameraDir();
+
+    float getFov();
+
+    float getAspect();
 }

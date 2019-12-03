@@ -16,6 +16,7 @@ import models.Line3D;
 
 public class Scene {
     private List<IModel> models = new ArrayList<>();
+    private LinkedList<PointLight> lights = new LinkedList<>();
 
     public List<IModel> getModelsList() {
         return models;
@@ -94,5 +95,9 @@ public class Scene {
         if(drawPolygons)
             drawer.drawPolygons();
         drawer.drawCounters();
+    }
+
+    public LinkedList<PointLight> getLights() {
+        return lights;
     }
 }

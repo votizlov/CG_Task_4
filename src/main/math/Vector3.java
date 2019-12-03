@@ -23,6 +23,10 @@ public class Vector3 {
         values = new float[]{x, y, z};
     }
 
+    public Vector3(Vector3 point, Vector3 point2) {
+
+    }
+
     /**
      * X-составляющая вектора
      * @return X-составляющая вектора

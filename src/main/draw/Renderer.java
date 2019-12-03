@@ -1,11 +1,13 @@
 package main.draw;
 
+import main.math.Vector3;
 import main.screen.ScreenConverter;
-import main.third.Camera;
-import main.third.Scene;
+import main.third.*;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.HashMap;
+import java.util.LinkedList;
 
 public class Renderer {
     private static final int MAX_RAY_DEPTH = 3;
@@ -22,44 +24,59 @@ public class Renderer {
 
     public Image renderImage() {
         BufferedImage bi = new BufferedImage(sc.getWs(), sc.getHs(), BufferedImage.TYPE_INT_RGB);
+        IModel primRayHit = null;
+        Vector3 primRayHitPoint = null;
+
         for (int j = 0; j < sc.getWs(); ++j) {
             for (int i = 0; i < sc.getHs(); ++i) {
-/*
+
                 // compute primary ray direction
-                Ray primRay;
-                computePrimRay(i, j, &primRay);
+                Ray primRay = new Ray(cam.getCameraPos(), cam.getCameraDir(), 10f);
+                primRay.pointRay(i, j, cam.getFov());
                 // shoot prim ray in the scene and search for intersection
-                Point pHit;
-                Normal nHit;
-                float minDist = INFINITY;
-                Object object = NULL;
-                for (int k = 0; k < objects.size(); ++k) {
-                    if (Intersect(objects[k], primRay, &pHit, &nHit)) {
-                        float distance = Distance(eyePosition, pHit);
-                        if (distance < minDistance) {
-                            object = objects[k];
-                            minDistance = distance; // update min distance
-                        }
-                    }
-                }
-                if (object != NULL) {
-                    // compute illumination
-                    Ray shadowRay;
-                    shadowRay.direction = lightPosition - pHit;
-                    bool isShadow = false;
-                    for (int k = 0; k < objects.size(); ++k) {
-                        if (Intersect(objects[k], shadowRay)) {
-                            isInShadow = true;
+                //Point pHit;
+                //Normal nHit;
+                //float minDist = INFINITY;
+                //Object object = NULL;
+                for (IModel m : scene.getModelsList()) {
+                    for (PolyLine3D p : m.getLines()
+                    ) {
+                        Vector3 t = primRay.isHitting(p);
+                        if (t != null) {
+                            primRayHit = m;
+                            primRayHitPoint = t;
                             break;
                         }
                     }
+                    if (primRayHit != null)
+                        break;
                 }
-                if (!isInShadow)
-                    pixels[i][j] = object->color * light.brightness;
-                else
-                    pixels[i][j] = 0;
-
-                 */
+                boolean isInShadow = false;
+                if (primRayHit != null) {
+                    // compute illumination
+                    for (PointLight p : scene.getLights()
+                    ) {
+                        Ray shadowRay = new Ray(primRayHitPoint, new Vector3(primRayHitPoint, p.getPos()), new Vector3(primRayHitPoint, p.getPos()).length());
+                        for (IModel m : scene.getModelsList()) {
+                            for (PolyLine3D p1 : m.getLines()
+                            ) {
+                                Vector3 t = primRay.isHitting(p1);
+                                if (t != null) {
+                                    isInShadow = true;
+                                    break;
+                                }
+                            }
+                            if (primRayHit != null)
+                                break;
+                        }
+                    }
+                }
+                if (!isInShadow) {
+                    bi.setRGB(i, j, Color.YELLOW.getRGB());
+                } else {
+                    //pixels[i][j] = 0;
+                }
+                //intersectedModels.clear();
             }
 
         }

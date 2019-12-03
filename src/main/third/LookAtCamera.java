@@ -71,6 +71,16 @@ public class LookAtCamera implements ICamera {
         view = Matrix4Factories.cameraViewMatrix(new Vector3(10+vector3.getX(),10+vector3.getY(),10+vector3.getZ()),new Vector3(0,0,0),new Vector3(0,1,0));
     }
 
+    @Override
+    public Vector3 getCameraDir() {
+        return null;
+    }
+
+    @Override
+    public float getFov() {
+        return 0;
+    }
+
     public Matrix4 getScale() {
         return scale;
     }
