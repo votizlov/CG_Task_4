@@ -97,6 +97,15 @@ public class LookAtCamera implements ICamera {
         return null;
     }
 
+    @Override
+    public Vector3 w2sNoScale(Vector3 vector3) {
+        return null;
+    }
+
+    public void setPos(Vector3 vector3) {
+
+    }
+
     public Matrix4 getScale() {
         return scale;
     }

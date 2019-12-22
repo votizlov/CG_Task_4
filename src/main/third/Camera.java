@@ -112,6 +112,18 @@ public class Camera implements ICamera {
     }
 
     public Vector3 getCameraPos(){
-        return new Vector3(translate.getAt(3,0),translate.getAt(3,1),translate.getAt(3,2));
+        return new Vector3(translate.getAt(0,3),translate.getAt(1,3),translate.getAt(2,3));
+    }
+
+    @Override
+    public Vector3 w2sNoScale(Vector3 vector3) {
+        return projection.mul(
+                translate.mul(
+                        rotate.mul(
+                                        new Vector4(vector3, 1)
+
+                        )
+                )
+        ).asVector3();
     }
 }

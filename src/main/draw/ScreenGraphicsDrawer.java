@@ -16,6 +16,10 @@ import main.third.PolyLine3D;
 
 
 public abstract class ScreenGraphicsDrawer implements IDrawer {
+    public ScreenConverter getSc() {
+        return sc;
+    }
+
     private ScreenConverter sc;
     private Graphics2D gr;
 

@@ -90,6 +90,12 @@ public class MyCamera implements ICamera {
         return null;
     }
 
+    @Override
+    public Vector3 w2sNoScale(Vector3 vector3) {
+        return null;
+    }
+
+
     public Matrix4 getScale() {
         return scale;
     }

@@ -203,8 +203,9 @@ public class CameraController implements MouseListener, MouseMotionListener, Mou
                 float length = cur.add(zero.mul(-1)).asVector3().length();
                 if (dy < 0)
                     length = -length;
-                //System.out.println(length); todo чтоб не потерять важный дебаг
+                //System.out.println(length);// todo чтоб не потерять важный дебаг
                 camera.modifyTranslate(Matrix4Factories.translation(0, 0, length));
+                System.out.println(camera.getCameraPos().getX()+" "+camera.getCameraPos().getY()+" "+camera.getCameraPos().getZ());
             }
         }
         last = current;
@@ -222,7 +223,7 @@ public class CameraController implements MouseListener, MouseMotionListener, Mou
         /*Если зажат Control, то будем менять параметры перспективы, иначе - масштаба*/
         if (e.isControlDown()) {
             /*delta*5f - экспериментально подобранное число. Чем меньше, тем быстрее будет изменяться точка схода*/
-            camera.modifyProjection(Matrix4Factories.centralProjection(delta*5f, Matrix4Factories.Axis.Z));
+            camera.modifyProjection(Matrix4Factories.centralProjection(delta*500f, Matrix4Factories.Axis.Z));
         } else {
             /*Вычислим коэффициент масштаба*/
             float factor = 1;

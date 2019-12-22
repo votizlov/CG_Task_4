@@ -16,6 +16,7 @@ import javax.swing.JPanel;
 import main.draw.IDrawer;
 import main.draw.Renderer;
 import main.draw.SimpleEdgePolygonDrawer;
+import main.math.Matrix4Factories;
 import main.math.Vector3;
 import main.obj.Obj;
 import main.obj.ObjReader;
@@ -42,8 +43,8 @@ public class DrawPanel extends JPanel
         scene.showAxes();
 
         scene.getModelsList().add(new Parallelepiped(
-                new Vector3(-5, 5, -5),
-                new Vector3(5, 5, 5),
+                new Vector3(-1, -1, -1),
+                new Vector3(1, 1, -1),
                 new Material(Color.DARK_GRAY, 0.5f)
         ));
 

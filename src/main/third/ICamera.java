@@ -33,4 +33,6 @@ public interface ICamera {
     float getAspect();
 
     Vector3 getCameraPos();
+
+    Vector3 w2sNoScale(Vector3 vector3);
 }

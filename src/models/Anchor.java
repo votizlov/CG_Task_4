@@ -20,13 +20,6 @@ public class Anchor implements IModel {
         ),false));
     }
 
-    public void setPos(Vector3 v){
-        p.clear();
-        p.add(new PolyLine3D(Collections.singletonList(
-                v
-        ),false));
-    }
-
     @Override
     public List<PolyLine3D> getLines() {
         return p;
