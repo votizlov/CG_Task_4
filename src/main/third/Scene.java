@@ -92,14 +92,20 @@ public class Scene {
                         lines.add(new PolyLine3D(points, pl.isClosed()));
                     }
                 }
+            updateLights(cam);
             /*Закрашиваем фон*/
             drawer.clear(backgroundColor);
+            drawer.addLights(lights);
             /*Рисуем все линии*/
             drawer.draw(lines);
-            if (drawPolygons)
-                drawer.drawPolygons();
             drawer.drawCounters();
         }
+    }
+
+    private void updateLights(ICamera c){
+        for (PointLight p : lights) {
+                    p.setPos(c.w2s(p.getA().getLines().get(0).getPoints().get(0)));
+            }
     }
 
     public LinkedList<PointLight> getLights() {

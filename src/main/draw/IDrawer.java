@@ -5,6 +5,9 @@
 package main.draw;
 
 import java.util.Collection;
+import java.util.LinkedList;
+
+import main.third.PointLight;
 import main.third.PolyLine3D;
 
 
@@ -24,4 +27,6 @@ public interface IDrawer {
     void drawPolygons();
 
     void drawCounters();
+
+    void addLights(LinkedList<PointLight> lights);
 }

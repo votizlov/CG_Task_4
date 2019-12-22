@@ -21,11 +21,10 @@ import static java.lang.Math.pow;
 
 
 public class SimpleEdgePolygonDrawer extends ScreenGraphicsDrawer {
-    PointLight pointLight;
+    LinkedList<PointLight> lights = new LinkedList<>();
 
     public SimpleEdgePolygonDrawer(ScreenConverter sc, Graphics2D g) {
         super(sc, g);
-        pointLight = new PointLight(new Vector3(0, 0, 0), 300, 10, Color.ORANGE);
     }
 
     /**
@@ -51,12 +50,28 @@ public class SimpleEdgePolygonDrawer extends ScreenGraphicsDrawer {
         double k;
         /*если линия замкнута - рисем полиго, иначе - полилинию*/
         if (polyline.isClosed()) {
-            getGraphics().drawPolygon(crds.getXx(), crds.getYy(), crds.size());
-            k = (getFaceDistance(polyline) * pointLight.getdIntensity()) / pointLight.getIntensity();
-            if (k > 1)
-                k = 0;
-            getGraphics().setColor(new Color((int) (250 * k), (int) (218 * k), (int) (94 * k)));
-            //getGraphics().setColor(Color.ORANGE);
+            //getGraphics().drawPolygon(crds.getXx(), crds.getYy(), crds.size());
+            int r = 0;
+            int g = 0;
+            int b = 0;
+            for (PointLight p:lights
+                 ) {
+                k = getFaceDistance(polyline,p)/p.getIntensity();
+                if(k<=1) {
+                    k=1-k;
+                    r += (int) (p.getColor().getRed() * k);
+                    g += (int) (p.getColor().getGreen() * k);
+                    b += (int) (p.getColor().getBlue() * k);
+                }
+            }
+            if (r > 255)
+                r = 255;
+            if (g > 255)
+                g = 255;
+            if (b > 255)
+                b = 255;
+
+            getGraphics().setColor(new Color(r,g,b));
             getGraphics().fillPolygon(crds.getXx(), crds.getYy(), crds.size());
         } else
         getGraphics().drawPolyline(crds.getXx(), crds.getYy(), crds.size());
@@ -106,7 +121,12 @@ public class SimpleEdgePolygonDrawer extends ScreenGraphicsDrawer {
     public void drawCounters() {
     }
 
-    private double getFaceDistance(PolyLine3D line){
+    @Override
+    public void addLights(LinkedList<PointLight> lights) {
+        this.lights.addAll(lights);
+    }
+
+    private double getFaceDistance(PolyLine3D line,PointLight pointLight){
         double min = line.getPoints().get(0).getDistance(pointLight.getPos());
         double max = 0;
         double t;

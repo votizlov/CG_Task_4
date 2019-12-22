@@ -22,10 +22,7 @@ import main.obj.ObjReader;
 import main.obj.ObjUtils;
 import main.screen.ScreenConverter;
 import main.third.*;
-import models.Line3D;
-import models.OBJModel;
-import models.Parallelepiped;
-import models.Plane;
+import models.*;
 
 
 public class DrawPanel extends JPanel
@@ -58,6 +55,9 @@ public class DrawPanel extends JPanel
             e.printStackTrace();
         }
 
+        scene.getLights().add(new PointLight(6,Color.CYAN,new Anchor(new Vector3(4,4,4))));
+        scene.getLights().add(new PointLight(6,Color.ORANGE,new Anchor(new Vector3(-4,-4,-4))));
+
         camController.addRepaintListener(this);
         addMouseListener(camController);
         addMouseMotionListener(camController);
@@ -72,7 +72,7 @@ public class DrawPanel extends JPanel
         BufferedImage bi = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_RGB);
         Graphics2D graphics = (Graphics2D) bi.getGraphics();
         IDrawer dr = new SimpleEdgePolygonDrawer(sc, graphics);
-        if (!isRendererActive)
+        if (isRendererActive)
             scene.drawScene(dr, cam, new Renderer(sc, cam, scene));
         else
             scene.drawScene(dr, cam, null);
