@@ -22,23 +22,14 @@ import org.w3c.dom.ls.LSOutput;
 public class CameraController implements MouseListener, MouseMotionListener, MouseWheelListener, KeyListener {
     @Override
     public void keyTyped(KeyEvent keyEvent) {
-        System.out.println("a");
     }
 
+    private boolean isRendererActive = false;
     @Override
     public void keyPressed(KeyEvent keyEvent) {
-        System.out.println("a");
-        switch (keyEvent.getKeyCode()){
-            case KeyEvent.VK_A:
-                camera.modifyCameraPos(new Vector3(1,0,0));
-            break;
-            case KeyEvent.VK_S:
-                camera.modifyCameraPos(new Vector3(0,1,0));
-            break;
-            case KeyEvent.VK_D:
-                camera.modifyCameraPos(new Vector3(0,0,1));
-            break;
-        }
+        System.out.println("sad");
+        if(keyEvent.getKeyCode() == KeyEvent.VK_R)
+            isRendererActive = !isRendererActive;
     }
 
     @Override
@@ -61,7 +52,7 @@ public class CameraController implements MouseListener, MouseMotionListener, Mou
         /**
          * Метод, вызываемый при изменении
          */
-        void shouldRepaint();
+        void shouldRepaint(boolean isRendererActive);
     }
     
     
@@ -91,7 +82,7 @@ public class CameraController implements MouseListener, MouseMotionListener, Mou
      */
     protected void onRepaint() {
         for (RepaintListener cl : listeners)
-            cl.shouldRepaint();
+            cl.shouldRepaint(isRendererActive);
     }
     
     /*=============== Конец паттерна "слушатель" ==================*/

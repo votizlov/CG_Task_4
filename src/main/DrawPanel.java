@@ -14,6 +14,7 @@ import java.util.LinkedList;
 import javax.swing.JPanel;
 
 import main.draw.IDrawer;
+import main.draw.Renderer;
 import main.draw.SimpleEdgePolygonDrawer;
 import main.math.Vector3;
 import main.obj.Obj;
@@ -26,20 +27,19 @@ import models.OBJModel;
 import models.Parallelepiped;
 import models.Plane;
 
-/**
- * @author Alexey
- */
+
 public class DrawPanel extends JPanel
         implements CameraController.RepaintListener {
     private Scene scene;
     private ScreenConverter sc;
     private ICamera cam;
     private CameraController camController;
+    private boolean isRendererActive = false;
 
     public DrawPanel() {
         super();
         sc = new ScreenConverter(-1, 1, 2, 2, 1, 1);
-        cam = new LookAtCamera();
+        cam = new Camera();
         camController = new CameraController(cam, sc);
         scene = new Scene(Color.WHITE.getRGB());
         scene.showAxes();
@@ -47,13 +47,13 @@ public class DrawPanel extends JPanel
         scene.getModelsList().add(new Parallelepiped(
                 new Vector3(-5, 5, -5),
                 new Vector3(5, 5, 5),
-                new Material(Color.DARK_GRAY,0.5f)
+                new Material(Color.DARK_GRAY, 0.5f)
         ));
 
         Obj obj = null;
         try {
             obj = ObjUtils.convertToRenderable(ObjReader.read(new FileInputStream("src/models/only_quad_sphere.obj")));
-            scene.getModelsList().add(new OBJModel(obj,new Material(Color.CYAN,0f)));
+            scene.getModelsList().add(new OBJModel(obj, new Material(Color.CYAN, 0f)));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -62,7 +62,8 @@ public class DrawPanel extends JPanel
         addMouseListener(camController);
         addMouseMotionListener(camController);
         addMouseWheelListener(camController);
-        addKeyListener(camController);
+        this.addKeyListener(camController);
+        requestFocus();
     }
 
     @Override
@@ -71,7 +72,10 @@ public class DrawPanel extends JPanel
         BufferedImage bi = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_RGB);
         Graphics2D graphics = (Graphics2D) bi.getGraphics();
         IDrawer dr = new SimpleEdgePolygonDrawer(sc, graphics);
-        scene.drawScene(dr, cam);
+        if (!isRendererActive)
+            scene.drawScene(dr, cam, new Renderer(sc, cam, scene));
+        else
+            scene.drawScene(dr, cam, null);
         g.drawImage(bi, 0, 0, null);
         graphics.dispose();
         /*for (int i = 0; i < 4; i++) {
@@ -83,7 +87,8 @@ public class DrawPanel extends JPanel
     }
 
     @Override
-    public void shouldRepaint() {
+    public void shouldRepaint(boolean isRendererActive) {
+        this.isRendererActive = isRendererActive;
         repaint();
     }
 }

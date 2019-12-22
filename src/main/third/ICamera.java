@@ -31,4 +31,6 @@ public interface ICamera {
     float getFov();
 
     float getAspect();
+
+    Vector3 getCameraPos();
 }

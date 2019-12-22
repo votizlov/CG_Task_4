@@ -10,6 +10,7 @@ import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 import main.draw.IDrawer;
+import main.draw.Renderer;
 import main.math.Vector3;
 import models.Line3D;
 
@@ -68,33 +69,37 @@ public class Scene {
      * @param drawer то, с помощью чего будем рисовать
      * @param cam камера для преобразования координат
      */
-    public void drawScene(IDrawer drawer, ICamera cam) {
-        List<PolyLine3D> lines = new LinkedList<>();
-        LinkedList<Collection<? extends IModel>> allModels = new LinkedList<>();
-        allModels.add(models);
-        /*Если требуется, то добавляем оси координат*/
-        if (isShowAxes())
-            allModels.add(axes);
-        /*перебираем все полилинии во всех моделях*/
-        for (Collection<? extends IModel> mc : allModels)
-            for (IModel m : mc) {
-                for (PolyLine3D pl : m.getLines()) {
-                    /*Все точки конвертируем с помощью камеры*/
-                    List<Vector3> points = new LinkedList<>();
-                    for (Vector3 v : pl.getPoints()) {
-                        points.add(cam.w2s(v));
+    public void drawScene(IDrawer drawer, ICamera cam, Renderer r) {
+        if(r!=null)
+            r.renderImage();
+        else {
+            List<PolyLine3D> lines = new LinkedList<>();
+            LinkedList<Collection<? extends IModel>> allModels = new LinkedList<>();
+            allModels.add(models);
+            /*Если требуется, то добавляем оси координат*/
+            if (isShowAxes())
+                allModels.add(axes);
+            /*перебираем все полилинии во всех моделях*/
+            for (Collection<? extends IModel> mc : allModels)
+                for (IModel m : mc) {
+                    for (PolyLine3D pl : m.getLines()) {
+                        /*Все точки конвертируем с помощью камеры*/
+                        List<Vector3> points = new LinkedList<>();
+                        for (Vector3 v : pl.getPoints()) {
+                            points.add(cam.w2s(v));
+                        }
+                        /*Создаём на их сонове новые полилинии, но в том виде, в котором их видит камера*/
+                        lines.add(new PolyLine3D(points, pl.isClosed()));
                     }
-                    /*Создаём на их сонове новые полилинии, но в том виде, в котором их видит камера*/
-                    lines.add(new PolyLine3D(points, pl.isClosed()));
                 }
-            }
-        /*Закрашиваем фон*/
-        drawer.clear(backgroundColor);
-        /*Рисуем все линии*/
-        drawer.draw(lines);
-        if(drawPolygons)
-            drawer.drawPolygons();
-        drawer.drawCounters();
+            /*Закрашиваем фон*/
+            drawer.clear(backgroundColor);
+            /*Рисуем все линии*/
+            drawer.draw(lines);
+            if (drawPolygons)
+                drawer.drawPolygons();
+            drawer.drawCounters();
+        }
     }
 
     public LinkedList<PointLight> getLights() {

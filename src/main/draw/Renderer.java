@@ -13,10 +13,10 @@ public class Renderer {
     private static final int MAX_RAY_DEPTH = 3;
     private static final float PRECISION = 0.0001f;
     private ScreenConverter sc;
-    private Camera cam;
+    private ICamera cam;
     private Scene scene;
 
-    public Renderer(ScreenConverter sc, Camera cam, Scene scene) {
+    public Renderer(ScreenConverter sc, ICamera cam, Scene scene) {
         this.sc = sc;
         this.cam = cam;
         this.scene = scene;
@@ -32,7 +32,7 @@ public class Renderer {
 
                 // compute primary ray direction
                 Ray primRay = new Ray(cam.getCameraPos(), cam.getCameraDir(), 10f);
-                primRay.pointRay(i, j, cam.getFov());
+                //primRay.pointRay(i, j, cam.getFov());
                 // shoot prim ray in the scene and search for intersection
                 //Point pHit;
                 //Normal nHit;

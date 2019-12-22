@@ -80,6 +80,16 @@ public class MyCamera implements ICamera {
         return 0;
     }
 
+    @Override
+    public float getAspect() {
+        return 0;
+    }
+
+    @Override
+    public Vector3 getCameraPos() {
+        return null;
+    }
+
     public Matrix4 getScale() {
         return scale;
     }

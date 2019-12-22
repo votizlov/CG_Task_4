@@ -8,6 +8,9 @@ public class LookAtCamera implements ICamera {
 
     public LookAtCamera() {
         translate = Matrix4.one();
+        translate.setAt(0,3,4);
+        translate.setAt(1,3,4);
+        translate.setAt(2,3,4);
         rotate = Matrix4.one();
         scale = Matrix4.one();
         projection = Matrix4Factories.cameraProjectionMatrix(30,0.1f,100f,1);
@@ -52,6 +55,9 @@ public class LookAtCamera implements ICamera {
 
     public void modifyRotate(Matrix4 dp) {
         this.rotate = dp.mul(this.rotate);
+        this.camera = Matrix4Factories.cameraViewMatrix(new Vector3(10,10,10),
+                dp.mul(new Vector4(new Vector3(0,0,0),1)).asVector3(),
+                new Vector3(0,1,0));
     }
 
     public Matrix4 getRotate() {
@@ -79,6 +85,16 @@ public class LookAtCamera implements ICamera {
     @Override
     public float getFov() {
         return 0;
+    }
+
+    @Override
+    public float getAspect() {
+        return 0;
+    }
+
+    @Override
+    public Vector3 getCameraPos() {
+        return null;
     }
 
     public Matrix4 getScale() {
