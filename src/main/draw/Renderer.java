@@ -46,7 +46,7 @@ public class Renderer {
                             primRayHit = m;
                             primRayHitPoint = t;
                             break;
-                        }
+                        }//todo normal for reflection
                     }
                     if (primRayHit != null)
                         break;
@@ -81,6 +81,10 @@ public class Renderer {
 
         }
         return bi;
+    }
+
+    private void findNearestFace(Vector3 p,IModel hitModel,Vector3 hitP){
+
     }
     /*
     #define MAX_RAY_DEPTH 3

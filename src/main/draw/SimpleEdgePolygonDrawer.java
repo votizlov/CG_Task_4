@@ -16,8 +16,7 @@ import main.screen.ScreenPoint;
 import main.third.PointLight;
 import main.third.PolyLine3D;
 
-import static java.lang.Math.abs;
-import static java.lang.Math.pow;
+import static java.lang.Math.*;
 
 
 public class SimpleEdgePolygonDrawer extends ScreenGraphicsDrawer {
@@ -50,7 +49,7 @@ public class SimpleEdgePolygonDrawer extends ScreenGraphicsDrawer {
         double k;
         /*если линия замкнута - рисем полиго, иначе - полилинию*/
         if (polyline.isClosed()) {
-            getGraphics().drawPolygon(crds.getXx(), crds.getYy(), crds.size());
+            //getGraphics().drawPolygon(crds.getXx(), crds.getYy(), crds.size());
             int r = 0;
             int g = 0;
             int b = 0;

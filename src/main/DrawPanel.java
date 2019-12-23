@@ -43,8 +43,8 @@ public class DrawPanel extends JPanel
         scene.showAxes();
 
         scene.getModelsList().add(new Parallelepiped(
-                new Vector3(-1, -1, -1),
-                new Vector3(1, 1, -1),
+                new Vector3(-1, -1, -2),
+                new Vector3(1, 1, -2),
                 new Material(Color.DARK_GRAY, 0.5f)
         ));
 

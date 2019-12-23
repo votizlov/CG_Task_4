@@ -105,6 +105,7 @@ public class Scene {
     private void updateLights(ICamera c){
         for (PointLight p : lights) {
                     p.setPos(c.w2s(p.getA().getLines().get(0).getPoints().get(0)));
+            System.out.println(p.getPos().getX()+" "+p.getPos().getY()+" "+p.getPos().getZ());
             }
     }
 
