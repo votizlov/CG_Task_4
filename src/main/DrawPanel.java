@@ -47,7 +47,7 @@ public class DrawPanel extends JPanel
                 new Vector3(1, 1, -2),
                 new Material(Color.DARK_GRAY, 0.5f)
         ));
-
+/*
         Obj obj = null;
         try {
             obj = ObjUtils.convertToRenderable(ObjReader.read(new FileInputStream("src/models/only_quad_sphere.obj")));
@@ -55,7 +55,7 @@ public class DrawPanel extends JPanel
         } catch (IOException e) {
             e.printStackTrace();
         }
-
+9*/
         scene.getLights().add(new PointLight(6,Color.CYAN,new Anchor(new Vector3(4,4,4))));
         scene.getLights().add(new PointLight(6,Color.ORANGE,new Anchor(new Vector3(-4,-4,-4))));
 
@@ -73,10 +73,10 @@ public class DrawPanel extends JPanel
         BufferedImage bi = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_RGB);
         Graphics2D graphics = (Graphics2D) bi.getGraphics();
         IDrawer dr = new SimpleEdgePolygonDrawer(sc, graphics);
-        if (isRendererActive)
-            scene.drawScene(dr, cam, new Renderer(sc, cam, scene));
+        if (!isRendererActive)
+            scene.drawScene(dr, cam, new Renderer(sc, cam, scene),bi);
         else
-            scene.drawScene(dr, cam, null);
+            scene.drawScene(dr, cam, null,null);
         g.drawImage(bi, 0, 0, null);
         graphics.dispose();
         /*for (int i = 0; i < 4; i++) {

@@ -4,8 +4,8 @@
  */
 package main.math;
 
-import static java.lang.Math.PI;
-import static java.lang.Math.tan;
+import static java.lang.Math.*;
+import static java.lang.Math.pow;
 
 /**
  * Класс, хранящий методы создания особых матриц.
@@ -148,6 +148,18 @@ public final class Matrix4Factories {
                 {0, (float) (2*nearClipping/(top-bottom)), (float) ((top+bottom)/(top-bottom)),0},
                 {0,0, (float) (-(farClipping+nearClipping)/(farClipping-nearClipping)), (float) (-2*farClipping*nearClipping/(farClipping-nearClipping))},
                 {0,0, -1,0}});
+    }
+
+    public static Matrix4 rorationAroundVector(Vector3 v,float cos) {
+        float sin = (float) sqrt(1 - cos*cos);
+        Matrix4 m = new Matrix4(new float[][]{
+                {(float) (cos + (1-cos)*pow(v.getX(),2)),(1-cos)*v.getX()*v.getY()-sin*v.getZ(),(1-cos)*v.getX()*v.getZ()+sin*v.getY(),0},
+                {(1-cos)*v.getY()*v.getX()+sin*v.getZ(), (float) (cos + (1-cos)*pow(v.getY(),2)),(1-cos)*v.getY()*v.getZ()-sin*v.getX(),0},
+                {(1-cos)*v.getZ()*v.getX()-sin*v.getY(),(1-cos)*v.getZ()*v.getY()+sin*v.getX(), (float) (cos + (1-cos)*pow(v.getZ(),2)),0},
+                {0,0,0,1}
+        });
+
+        return m;
     }
 
     public static Matrix4 cameraViewMatrix(Vector3 eye,Vector3 center,Vector3 top){

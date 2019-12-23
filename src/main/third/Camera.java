@@ -78,7 +78,7 @@ public class Camera implements ICamera {
 
     @Override
     public Vector3 getCameraDir() {
-        return new Vector3(translate.getAt(3,0),translate.getAt(3,1),translate.getAt(3,2));
+        return new Vector3(0,0,-1);
     }
 
     @Override
