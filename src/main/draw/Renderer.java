@@ -12,6 +12,7 @@ import java.awt.image.BufferedImage;
 import java.util.HashMap;
 import java.util.LinkedList;
 
+import static java.lang.Math.acos;
 import static java.lang.Math.cos;
 
 public class Renderer {
@@ -32,31 +33,31 @@ public class Renderer {
         this.sc = sc;
         this.cam = cam;
         this.scene = scene;
-        rayPointerX = Matrix4Factories.rorationAroundVector(new Vector3(1,0,0), (float) cos(0.136794624/300));
-        rayPointerY = Matrix4Factories.rorationAroundVector(new Vector3(0,1,0), (float) cos(0.136794624/300));
+        rayPointerX = Matrix4Factories.rorationAroundVector(new Vector3(1, 0, 0), (float) cos(0.136794624 / 300));
+        rayPointerY = Matrix4Factories.rorationAroundVector(new Vector3(0, 1, 0), (float) cos(0.136794624 / 300));
     }
 
-    public Image renderImage(BufferedImage bi,LinkedList<PolyLine3D> lines) {
+    public Image renderImage(BufferedImage bi, LinkedList<PolyLine3D> lines) {
 
         Vector3 t = cam.getCameraDir();
         //начальный луч в левом верхнем углу
         for (int i = 0; i < 300; i++) {
-            t = rayPointerX.mul(new Vector4(t,0)).asVector3();
+            t = rayPointerX.mul(new Vector4(t, 0)).asVector3();
         }
         for (int i = 0; i < 300; i++) {
-            t = rayPointerY.mul(new Vector4(t,0)).asVector3();
+            t = rayPointerY.mul(new Vector4(t, 0)).asVector3();
         }
-int c = 0;
+        int c = 0;
         for (int j = 0; j < 600; ++j) {
             for (int i = 0; i < 600; ++i) {
 
                 // compute primary ray direction
                 Ray primRay = new Ray(cam.getCameraPos(), t);
                 while (new Vector3(cam.getCameraPos(), primRay.getPoint()).length() < 5) {
-                    findNearestFace(primRay.getPoint(),lines);
+                    findNearestFace(primRay.getPoint(), lines);
                     if (primRayHitPoint != null) {
                         break;
-                    }else{
+                    } else {
                         primRay.trace((float) r);
                     }
 
@@ -83,47 +84,51 @@ int c = 0;
                         }
                     }
                 }*/
-                if (primRayHitPoint==null) {
+                if (primRayHitPoint == null) {
                     bi.setRGB(i, j, Color.WHITE.getRGB());
                 } else {
-                    bi.setRGB(i,j,Color.CYAN.getRGB());
+                    bi.setRGB(i, j, Color.CYAN.getRGB());
                 }
                 System.out.println(c++);
 
                 primRayHit = null;
                 primRayHitPoint = null;
-                t = rayPointerX.mul(new Vector4(t,0)).asVector3();
+                t = rayPointerX.mul(new Vector4(t, 0)).asVector3();
 
             }
-            t = rayPointerY.mul(new Vector4(t,0)).asVector3();
+            t = rayPointerY.mul(new Vector4(t, 0)).asVector3();
         }
 
 
         return bi;
     }
 
-    private void findNearestFace(Vector3 p,LinkedList<PolyLine3D> lines){
-    float min = new Vector3(p,scene.getModelsList().get(0).getLines().get(0).getPoints().get(0)).length();
-    PolyLine3D nearest = null;
-    IModel mod = null;
-       // for (IModel m:scene.getModelsList()
-         //    ) {
-            for (PolyLine3D l:lines
-                 ) {
-                if(l.isClosed())
-                for (Vector3 v:l.getPoints()
-                     ) {
-                    Vector3 t = new Vector3(p,v);
-                    if(t.length()<min) {
+    private void findNearestFace(Vector3 p, LinkedList<PolyLine3D> lines) {
+        float min = new Vector3(p, scene.getModelsList().get(0).getLines().get(0).getPoints().get(0)).length();
+        PolyLine3D nearest = null;
+        IModel mod = null;
+        // for (IModel m:scene.getModelsList()
+        //    ) {
+        for (PolyLine3D l : lines
+        ) {
+            float angle = 0;
+            if (l.isClosed()) {
+                Vector3 t1 = l.getPoints().get(0);
+                for (Vector3 v : l.getPoints()
+                ) {
+                    Vector3 t = new Vector3(p, v);
+                    angle+=acos(t1.dot(t)/(t1.length()*t.length()));
+                    if (t.length() < min) {
                         min = t.length();
-                        nearest=l;
+                        nearest = l;
                         //mod = m;
                     }
                 }
             }
+        }
         //}
         r = min;
-        if(min<E) {
+        if (min < E) {
             primRayHitPoint = p;
             //primRayHit = mod;
         }
